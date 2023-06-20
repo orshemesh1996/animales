@@ -15,6 +15,18 @@ module.exports={
         });
         
     },
+    getAnimal : (req,res) =>{
+        const animalId= req.params.animalId;
+        Animal.findById(animalId).then((animal) =>{
+            res.status(200).json({animal }) 
+        }).catch(error => {
+            res.status(500).json({
+                error
+            }) 
+
+        });
+
+    },
     createAnimal : (req,res) => {
         const {name,age,animalStatus,animalType} =req.body;
         const animal= new Animal( {
@@ -39,17 +51,30 @@ module.exports={
         });
        
     } , 
-    updateAnimal :(req,res) => {
+    updateAnimal: (req, res) => {
         const animalId= req.params.animalId;
-        res.status(200).json({
-            message:`update animal ${animalId}`
-        })
+
+        Animal.update({_id: animalId}, req.body).then(() => {
+            res.status(200).json({
+                message: 'animal Updated'
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        });
     },
     deleteAnimal: (req, res) => {
-        const AnimalId = req.params.AnimalId
-    
-        res.status(200).json({
-            message: `Delete Animal - ${AnimalId}`
-        })
+        const animalId = req.params.animalId
+
+        Animal.remove({_id: animalId}).then(() => {
+            res.status(200).json({
+                message: `animal _id:${animalId} Deleted`
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        });
     }
 }
