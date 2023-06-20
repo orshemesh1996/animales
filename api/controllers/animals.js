@@ -54,7 +54,7 @@ module.exports={
     updateAnimal: (req, res) => {
         const animalId= req.params.animalId;
 
-        Animal.update({_id: animalId}, req.body).then(() => {
+        Animal.updateOne({_id: animalId}, req.body).then(() => {
             res.status(200).json({
                 message: 'animal Updated'
             })
@@ -67,7 +67,7 @@ module.exports={
     deleteAnimal: (req, res) => {
         const animalId = req.params.animalId
 
-        Animal.remove({_id: animalId}).then(() => {
+        Animal.deleteOne({_id: animalId}).then(() => {
             res.status(200).json({
                 message: `animal _id:${animalId} Deleted`
             })
