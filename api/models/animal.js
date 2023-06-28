@@ -7,7 +7,7 @@ const animalSchema = mongoose.Schema({
     name: { type: String, required: true },
     age: { type: Number, required: true },
     animalStatus: { type: String, enum: animalStatus, required: true },
-  //  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" , required: true},
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" , required: true},
   //  images: { type: String, required: false , default: ''}
     animalType: { type: String, enum: animalType, required: true }
 });

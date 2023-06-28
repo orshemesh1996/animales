@@ -1,8 +1,9 @@
 const Animal =require('../models/animal');
 const mongoose= require('mongoose');
+const User=require('../models/user');
 module.exports={
     getAllAnimals:  (req,res) => {
-        Animal.find().then((animals) =>{
+        Animal.find().populate('userId').then((animals) =>{
             res.status(200).json({
                 animals
             })
@@ -17,7 +18,7 @@ module.exports={
     },
     getAnimal : (req,res) =>{
         const animalId= req.params.animalId;
-        Animal.findById(animalId).then((animal) =>{
+        Animal.findById(animalId).populate('userId').then((animal) =>{
             res.status(200).json({animal }) 
         }).catch(error => {
             res.status(500).json({
@@ -28,16 +29,27 @@ module.exports={
 
     },
     createAnimal : (req,res) => {
-        const {name,age,animalStatus,animalType} =req.body;
-        const animal= new Animal( {
-            _id:new mongoose.Types.ObjectId(),
-            name,
-            age,
-            animalStatus,
-            animalType,
-        })
+        const {name,age,animalStatus,animalType,userId} =req.body;
+        User.findById(userId).then((user)=>{
+            if(!user)
+            {
+                res.status(404).json({
+                    message:'User not found'
+                }) 
+            }
 
-        animal.save().then(() =>{
+            const animal= new Animal( {
+                _id:new mongoose.Types.ObjectId(),
+                name,
+                age,
+                animalStatus,
+                animalType,
+                userId
+            });
+            
+            return user.save();
+    
+        }).then(() =>{
 
             res.status(200).json({
                 message:'Create a new animal'
@@ -49,7 +61,7 @@ module.exports={
             }) 
 
         });
-       
+
     } , 
     updateAnimal: (req, res) => {
         const animalId= req.params.animalId;
