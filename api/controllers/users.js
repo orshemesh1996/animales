@@ -2,7 +2,7 @@ const User =require('../models/user');
 const mongoose= require('mongoose');
 module.exports={
     getAllUser:  (req,res) => {
-        User.find().then((users) =>{
+        User.find().populate('animalId').then((users) =>{
             res.status(200).json({
                 users 
             })
@@ -17,7 +17,7 @@ module.exports={
     },
     getUser : (req,res) =>{
         const userId= req.params.userId;
-        User.findById(userId).then((user) =>{
+        User.findById(userId).populate('animalId').then((user) =>{
             res.status(200).json({user }) 
         }).catch(error => {
             res.status(500).json({
@@ -28,12 +28,13 @@ module.exports={
 
     },
     createUser : (req,res) => {
-        const {name,userType,password} =req.body;
+        const {name,userType,password,animalId} =req.body;
         const user= new User( {
             _id:new mongoose.Types.ObjectId(),
             name,
             userType,
             password,
+            animalId
         })
 
         user.save().then(() =>{

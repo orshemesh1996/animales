@@ -30,26 +30,15 @@ module.exports={
     },
     createAnimal : (req,res) => {
         const {name,age,animalStatus,animalType,userId} =req.body;
-        User.findById(userId).then((user)=>{
-            if(!user)
-            {
-                res.status(404).json({
-                    message:'User not found'
-                }) 
-            }
-
-            const animal= new Animal( {
-                _id:new mongoose.Types.ObjectId(),
-                name,
-                age,
-                animalStatus,
-                animalType,
-                userId
-            });
-            
-            return user.save();
-    
-        }).then(() =>{
+        const animal= new Animal( {
+            _id:new mongoose.Types.ObjectId(),
+            name,
+            age,
+            animalStatus,
+            animalType,
+            userId
+        })
+        animal.save().then(() =>{
 
             res.status(200).json({
                 message:'Create a new animal'
@@ -61,11 +50,10 @@ module.exports={
             }) 
 
         });
-
+    
     } , 
     updateAnimal: (req, res) => {
         const animalId= req.params.animalId;
-
         Animal.updateOne({_id: animalId}, req.body).then(() => {
             res.status(200).json({
                 message: 'animal Updated'
