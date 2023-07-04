@@ -24,6 +24,7 @@ app.use((req, res, next) => {
 //routes
 app.use('/animals',animalesRoutes);
 app.use('/users',usersRoutes);
+app.use('/upload',express.static('uploads'))
 app.use((req, res, next) => {
     const error = new Error('Not Found');
     error.status = 404;

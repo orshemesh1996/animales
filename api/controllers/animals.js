@@ -29,6 +29,7 @@ module.exports={
 
     },
     createAnimal : (req,res) => {
+        const { path : image } =req.file;
         const {name,age,animalStatus,animalType,userId} =req.body;
         const animal= new Animal( {
             _id:new mongoose.Types.ObjectId(),
@@ -36,7 +37,8 @@ module.exports={
             age,
             animalStatus,
             animalType,
-            userId
+            userId,
+            image :image.replace('\\','/')
         })
         animal.save().then(() =>{
 

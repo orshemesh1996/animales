@@ -8,8 +8,9 @@ const animalSchema = mongoose.Schema({
     age: { type: Number, required: true },
     animalStatus: { type: String, enum: animalStatus, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" , required: true},
-  //  images: { type: String, required: false , default: ''}
-    animalType: { type: String, enum: animalType, required: true }
+    animalType: { type: String, enum: animalType, required: true },
+    image: { type: String}
+
 });
 
 module.exports = mongoose.model('Animal', animalSchema);

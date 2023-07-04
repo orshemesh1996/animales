@@ -29,6 +29,9 @@ module.exports={
     },
     createUser : (req,res) => {
         const {name,userType,password,animalId} =req.body;
+        if(!User.findById(animalId))
+        {
+
         const user= new User( {
             _id:new mongoose.Types.ObjectId(),
             name,
@@ -49,7 +52,11 @@ module.exports={
             }) 
 
         });
-       
+    }else{
+        res.status(200).json({
+            message:'animal is Exists'
+        }) 
+    }
     } , 
     updateUser: (req, res) => {
         const userId= req.params.userId;
