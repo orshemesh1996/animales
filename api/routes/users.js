@@ -5,11 +5,13 @@ const {
     signup,
     updateUser,
     deleteUser,
+    login,
     getUser
 }=require('../controllers/users');
 
 router.get('/',getAllUser);
-router.post('/',signup);
+router.post('/signup',signup);
+router.post('/login', login);
 router.get('/:userId',getUser);
 router.patch('/:userId',updateUser);
 router.delete('/:userId', deleteUser);

@@ -1,6 +1,8 @@
 const User =require('../models/user');
 const mongoose= require('mongoose');
-const bcrypt =require('bcrypt')
+const bcrypt =require('bcrypt');
+const jwt= require('jsonwebtoken');
+require('dotenv').config();
 module.exports={
     getAllUser:  (req,res) => {
         User.find().populate('animalId').then((users) =>{
@@ -27,6 +29,47 @@ module.exports={
 
         });
 
+    },
+    login : (req , res) =>{
+        console.log(process.env.TOKEN_SECRET);
+        const {email,password}=req.body;
+        User.find({email}).then((users) =>{
+            if(users.length===0){
+               return res.status(401).json({
+                    message:'Auth failed'
+                });
+            }
+            const[user]=users;
+           bcrypt.compare(password,user.password,(error,result)=>
+           {
+            if (error){
+            return res.status(401).json({
+                message:'Auth failed'
+            });
+            }
+            if(result){
+                const token=jwt.sign(
+                    {
+                        id : user._id,
+                        email : user.email
+
+                    }
+               , process.env.TOKEN_SECRET,
+               {
+                expiresIn:"1H"
+               });
+               return res.status(200).json({
+                    message:'Auth successful',
+                    token
+                })
+            }
+            return res.status(401).json({
+                message:'Auth failed'
+            });
+
+           });
+
+        })
     },
     signup : (req,res) => {
         const {name,email,userType,password,animalId} =req.body;
