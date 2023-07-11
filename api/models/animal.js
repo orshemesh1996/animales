@@ -9,6 +9,7 @@ const animalSchema = mongoose.Schema({
     animalStatus: { type: String, enum: animalStatus, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" , required: true},
     animalType: { type: String, enum: animalType, required: true },
+    userEffortId: { type: mongoose.Schema.Types.ObjectId, ref: "User" , required: true},
     image: { type: String}
 
 });

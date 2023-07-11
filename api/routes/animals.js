@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../Middlewares/upload');
+const checkAuth=require('../Middlewares/checkAuth');
 const {
     getAllAnimals,
     createAnimal,
@@ -11,8 +12,9 @@ const {
 
 
 router.get('/',getAllAnimals);
-router.post('/',upload.single('image'),createAnimal);
 router.get('/:animalId',getAnimal);
-router.patch('/:animalId',updateAnimal);
-router.delete('/:animalId', deleteAnimal);
+
+router.post('/',checkAuth,upload.single('image'),createAnimal);
+router.patch('/:animalId',checkAuth,updateAnimal);
+router.delete('/:animalId',checkAuth, deleteAnimal);
 module.exports = router;
