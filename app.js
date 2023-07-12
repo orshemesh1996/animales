@@ -3,6 +3,7 @@ const app = express();
 const mongoose =require('mongoose');
 const animalesRoutes=require('./api/routes/animals');
 const usersRoutes=require('./api/routes/users');
+const requestRoutes=require('./api/routes/requests');
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 //routes
 app.use('/animals',animalesRoutes);
 app.use('/users',usersRoutes);
+app.use('/requests',requestRoutes);
 app.use('/upload',express.static('uploads'))
 app.use((req, res, next) => {
     const error = new Error('Not Found');
