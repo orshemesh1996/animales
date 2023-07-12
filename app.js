@@ -1,4 +1,5 @@
 const express = require('express');
+//mongodb://127.0.0.1:27017/animalAdoption
 const app = express();
 const mongoose =require('mongoose');
 const animalesRoutes=require('./api/routes/animals');
@@ -8,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));
-mongoose.connect('mongodb://127.0.0.1:27017/animalAdoption',{ useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://or:<or1234>@cluster0.afeuwgh.mongodb.net/',{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Database connected successfully!'))
     .catch(() => console.log('Unable to connect to database'));
 
