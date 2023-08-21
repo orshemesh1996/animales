@@ -11,6 +11,27 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: false
 }));
+if (process.env.NODE_ENV == "development"){
+     const swaggerJSDoc=require('swagger-jsdoc')
+     const swaggerUi=require('swagger-ui-express')
+     const options ={ 
+          definition : { 
+              openapi: '3.0.0',
+               info : {
+                 title : " Api animals project",
+                 version : '1.0.0'
+                 },
+                    servers:[
+                          {
+                               api :'http://localhost:3000/'
+                                }
+                            ]
+                         },
+                         apis: ['./routes/*.js']
+                        }
+const swaggerSpec=swaggerJSDoc(options)
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
+}
 mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Database connected successfully!'))
     .catch(() => console.log('Unable to connect to database'));
@@ -26,6 +47,8 @@ app.use((req, res, next) => {
 });
 
 //routes
+
+
 app.use('/animals',animalesRoutes);
 app.use('/users',usersRoutes);
 app.use('/requests',requestRoutes);
