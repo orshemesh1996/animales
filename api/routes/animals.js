@@ -10,6 +10,13 @@ const {
     getAnimal
 }=require('../controllers/animals');
 
+/**
+* @swagger
+* tags: 
+*   name: Animals 
+*   description: the Animals api 
+*/
+
 
 router.get('/',getAllAnimals);
 router.get('/:animalId',getAnimal);

@@ -27,11 +27,12 @@ if (process.env.NODE_ENV == "development"){
                                 }
                             ]
                          },
-                         apis: ['./routes/*.js']
+                         apis: ['./api/routes/*.js']
                         }
 const swaggerSpec=swaggerJSDoc(options)
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 }
+
 mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Database connected successfully!'))
     .catch(() => console.log('Unable to connect to database'));

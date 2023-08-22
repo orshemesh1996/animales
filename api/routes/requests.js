@@ -9,6 +9,12 @@ const {
     updateRequest
 }=require('../controllers/Requests');
 
+/**
+* @swagger
+* tags: 
+*   name: Requests 
+*   description: the Requests api 
+*/
 
 router.get('/',getAllRequest);
 router.get('/:requestId',getRequest);
